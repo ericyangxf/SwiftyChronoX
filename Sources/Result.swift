@@ -236,6 +236,7 @@ public enum TagUnit { case
     extractTimezoneAbbrRefiner,
     extractTimezoneOffsetRefiner,
     forwardDateRefiner,
+    backwardDateRefiner,
     
     enMergeDateAndTimeRefiner,
     enMergeDateRangeRefiner,
@@ -247,7 +248,6 @@ public enum TagUnit { case
     deMergeDateAndTimeRefiner,
     deMergeDateRangeRefiner
 }
-
 
 
 

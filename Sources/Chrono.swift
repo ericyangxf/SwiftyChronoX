@@ -38,6 +38,7 @@ public enum OptionType: String { case
     noon = "noon",
     yearRemoval = "yearRemoval",
     forwardDate = "forwardDate",
+    backwardDate = "backwardDate",
     littleEndian = "littleEndian"
 }
 

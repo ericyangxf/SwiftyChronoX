@@ -32,15 +32,7 @@ Swift 3
 
 ### Install
 
-CocoaPods
-
-```ruby
-use_frameworks!
-
-target 'MyApp' do
-	pod 'SwiftyChrono'
-end
-```
+Use Swift Package Manager
 
 ### Usage
 
@@ -97,6 +89,12 @@ chrono.parseDate(text: "Bring a book on December 1", refDate: refDate)
 // "Dec 1, 2016, 12:00 PM"
 chrono.parseDate(text: "Bring a book on December 1", refDate: refDate, opt: [.forwardDate: 1])
 // "Dec 1, 2017, 12:00 PM"
+
+// options: .backward - the match date is always earlier than refDate
+chrono.parseDate(text: "Bring a book on December 1", refDate: refDate)
+// "Dec 1, 2016, 12:00 PM"
+chrono.parseDate(text: "Bring a book on December 1", refDate: refDate, opt: [.backwardDate: 1])
+// "Dec 1, 2015, 12:00 PM"
 
 // you can assignee which hour in 
 // morning, afternoon, evening, noon

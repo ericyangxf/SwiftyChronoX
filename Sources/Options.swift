@@ -79,6 +79,7 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         DEMergeDateRangeRefiner(),
         
         ForwardDateRefiner(),
+        BackwardDateRefiner(),
         // Extract additional info later
         ExtractTimezoneOffsetRefiner(),
         ExtractTimezoneAbbrRefiner(),
