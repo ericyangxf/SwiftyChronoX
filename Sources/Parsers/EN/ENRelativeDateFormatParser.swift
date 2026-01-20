@@ -66,10 +66,24 @@ public class ENRelativeDateFormatParser: Parser {
                 result.start.imply(.year, to: date.year)
             } else if NSRegularExpression.isMatch(forPattern: "month", in: relativeWord) {
                 date = isHalf ? date.added(modifier * (date.numberOf(.day, inA: .month) ?? 30)/2 , .day) : date.added(number * 1, .month)
-                // We don't know the exact day for next/last month
-                result.start.imply(.day, to: date.day)
-                result.start.assign(.year, value: date.year)
-                result.start.assign(.month, value: date.month)
+                let isSingleMonthRange = !hasExplicitMultiplier && !isHalf
+                if isSingleMonthRange {
+                    result.start.assign(.day, value: 1)
+                    result.start.assign(.month, value: date.month)
+                    result.start.assign(.year, value: date.year)
+                    result.end = ParsedComponents(components: nil, ref: result.start.date)
+                    result.end?.assign(.year, value: date.year)
+                    result.end?.assign(.month, value: date.month)
+                    let daysInMonth = date.numberOf(.day, inA: .month) ?? 0
+                    if daysInMonth > 0 {
+                        result.end?.assign(.day, value: daysInMonth)
+                    }
+                } else {
+                    // We don't know the exact day for next/last month
+                    result.start.imply(.day, to: date.day)
+                    result.start.assign(.year, value: date.year)
+                    result.start.assign(.month, value: date.month)
+                }
             } else if NSRegularExpression.isMatch(forPattern: "year", in: relativeWord) {
                 date = isHalf ? date.added(modifier * 6 , .month) : date.added(number, .year)
                 let isSingleYearRange = !hasExplicitMultiplier && !isHalf

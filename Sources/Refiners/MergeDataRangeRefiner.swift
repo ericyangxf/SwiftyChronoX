@@ -47,7 +47,7 @@ class MergeDateRangeRefiner: Refiner {
         return mergedResults
     }
     
-    private func isAbleToMerge(text: String, result1: ParsedResult, result2: ParsedResult) -> Bool {
+    func isAbleToMerge(text: String, result1: ParsedResult, result2: ParsedResult) -> Bool {
         let (startIndex, endIndex) = sortTwoNumbers(result1.index + result1.text.count, result2.index)
         let textBetween = text.substring(from: startIndex, to: endIndex)
         
@@ -83,6 +83,15 @@ class MergeDateRangeRefiner: Refiner {
         }
         
         fromResult.end = toResult.start
+        if let end = fromResult.end,
+            end.isCertain(component: .month),
+            !end.isCertain(component: .day)
+        {
+            let daysInMonth = end.date.numberOf(.day, inA: .month) ?? 0
+            if daysInMonth > 0 {
+                fromResult.end?.assign(.day, value: daysInMonth)
+            }
+        }
         
         for tag in toResult.tags.keys {
             fromResult.tags[tag] = true
@@ -100,7 +109,6 @@ class MergeDateRangeRefiner: Refiner {
         return fromResult
     }
 }
-
 
 
 

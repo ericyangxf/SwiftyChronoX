@@ -192,6 +192,7 @@ public enum TagUnit { case
     enMonthNameParser,
     enYearParser,
     enThisYearParser,
+    enThisMonthParser,
     enSinceYearParser,
     enFromYearParser,
     enRelativeDateFormatParser,
@@ -209,6 +210,8 @@ public enum TagUnit { case
     esLastYearParser,
     esSinceYearParser,
     esFromYearParser,
+    esThisMonthParser,
+    esLastMonthParser,
     esMonthNameLittleEndianParser,
     esSlashDateFormatParser,
     esTimeAgoFormatParser,
@@ -222,6 +225,8 @@ public enum TagUnit { case
     frLastYearParser,
     frSinceYearParser,
     frFromYearParser,
+    frThisMonthParser,
+    frLastMonthParser,
     frMonthNameLittleEndianParser,
     frSlashDateFormatParser,
     frTimeAgoFormatParser,
@@ -234,6 +239,8 @@ public enum TagUnit { case
     jpLastYearParser,
     jpSinceYearParser,
     jpFromYearParser,
+    jpThisMonthParser,
+    jpLastMonthParser,
     jpStandardParser,
     
     deCasualTimeParser,
@@ -244,6 +251,8 @@ public enum TagUnit { case
     deLastYearParser,
     deSinceYearParser,
     deFromYearParser,
+    deThisMonthParser,
+    deLastMonthParser,
     deMonthNameLittleEndianParser,
     deSlashDateFormatParser,
     deTimeAgoFormatParser,
@@ -256,6 +265,8 @@ public enum TagUnit { case
     zhLastYearParser,
     zhSinceYearParser,
     zhFromYearParser,
+    zhThisMonthParser,
+    zhLastMonthParser,
     zhHantCasualDateParser,
     zhHantDateParser,
     zhHantDeadlineFormatParser,
@@ -270,6 +281,8 @@ public enum TagUnit { case
     enMergeDateAndTimeRefiner,
     enMergeDateRangeRefiner,
     enPrioritizeSpecificDateRefiner,
+
+    esMergeDateRangeRefiner,
     
     frMergeDateRangeRefiner,
     frMergeDateAndTimeRefiner,
@@ -277,8 +290,6 @@ public enum TagUnit { case
     deMergeDateAndTimeRefiner,
     deMergeDateRangeRefiner
 }
-
-
 
 
 
