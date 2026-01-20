@@ -350,3 +350,63 @@ test('Test - Random text', function() {
     ok(result.start.get('day') == 2, JSON.stringify(result.start));
     ok(result.start.get('hour') == 6, JSON.stringify(result.start));
 });
+
+
+test("Test - Year Ranges", function() {
+    var refDate = new Date(2026, 0, 20);
+
+    var text = "Starbucks Ausgaben in 2025";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2025, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2025, JSON.stringify(result.end));
+        ok(result.end.get('month') == 12, JSON.stringify(result.end));
+        ok(result.end.get('day') == 31, JSON.stringify(result.end));
+    }
+
+    var text = "Starbucks Ausgaben dieses Jahr";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2026, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+
+    var text = "Starbucks Ausgaben letztes Jahr";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2025, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2025, JSON.stringify(result.end));
+        ok(result.end.get('month') == 12, JSON.stringify(result.end));
+        ok(result.end.get('day') == 31, JSON.stringify(result.end));
+    }
+
+    var text = "Starbucks Ausgaben seit 2024";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2024, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+
+    var text = "Starbucks Ausgaben ab 2024";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2024, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+});

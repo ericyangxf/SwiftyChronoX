@@ -114,6 +114,111 @@ class TestEN: ChronoJSXCTestCase {
             XCTAssertEqual(result.start.date.minute, 10)
         }
     }
+
+    func testYearRangeInPhrase() {
+        Chrono.sixMinutesFixBefore1900 = true
+        Chrono.preferredLanguage = .english
+        
+        let chrono = Chrono()
+        let refDate = Date(2024, 0, 1)
+        let results = chrono.parse("List my top 10 spending in 2025", refDate)
+        XCTAssertEqual(results.length, 1)
+        
+        if let result = results.first, let endDate = result.end?.date {
+            XCTAssertEqual(result.start.date.year, 2025)
+            XCTAssertEqual(result.start.date.month, 1)
+            XCTAssertEqual(result.start.date.day, 1)
+            XCTAssertEqual(endDate.year, 2025)
+            XCTAssertEqual(endDate.month, 12)
+            XCTAssertEqual(endDate.day, 31)
+        } else {
+            XCTFail("Expected a year range result for the in-phrase.")
+        }
+    }
+
+    func testLastYearRange() {
+        Chrono.sixMinutesFixBefore1900 = true
+        Chrono.preferredLanguage = .english
+        
+        let chrono = Chrono()
+        let refDate = Date(2026, 0, 20)
+        let results = chrono.parse("List Starbucks spending in last year", refDate)
+        XCTAssertEqual(results.length, 1)
+        
+        if let result = results.first, let endDate = result.end?.date {
+            XCTAssertEqual(result.start.date.year, 2025)
+            XCTAssertEqual(result.start.date.month, 1)
+            XCTAssertEqual(result.start.date.day, 1)
+            XCTAssertEqual(endDate.year, 2025)
+            XCTAssertEqual(endDate.month, 12)
+            XCTAssertEqual(endDate.day, 31)
+        } else {
+            XCTFail("Expected a year range result for last year.")
+        }
+    }
+
+    func testThisYearRange() {
+        Chrono.sixMinutesFixBefore1900 = true
+        Chrono.preferredLanguage = .english
+        
+        let chrono = Chrono()
+        let refDate = Date(2026, 0, 20)
+        let results = chrono.parse("List Starbucks spending in this year", refDate)
+        XCTAssertEqual(results.length, 1)
+        
+        if let result = results.first, let endDate = result.end?.date {
+            XCTAssertEqual(result.start.date.year, 2026)
+            XCTAssertEqual(result.start.date.month, 1)
+            XCTAssertEqual(result.start.date.day, 1)
+            XCTAssertEqual(endDate.year, 2026)
+            XCTAssertEqual(endDate.month, 1)
+            XCTAssertEqual(endDate.day, 20)
+        } else {
+            XCTFail("Expected a year-to-date range result for this year.")
+        }
+    }
+
+    func testSinceYearRange() {
+        Chrono.sixMinutesFixBefore1900 = true
+        Chrono.preferredLanguage = .english
+        
+        let chrono = Chrono()
+        let refDate = Date(2026, 0, 20)
+        let results = chrono.parse("List Starbucks spending since 2025", refDate)
+        XCTAssertEqual(results.length, 1)
+        
+        if let result = results.first, let endDate = result.end?.date {
+            XCTAssertEqual(result.start.date.year, 2025)
+            XCTAssertEqual(result.start.date.month, 1)
+            XCTAssertEqual(result.start.date.day, 1)
+            XCTAssertEqual(endDate.year, 2026)
+            XCTAssertEqual(endDate.month, 1)
+            XCTAssertEqual(endDate.day, 20)
+        } else {
+            XCTFail("Expected a since-year range result.")
+        }
+    }
+
+    func testFromYearRange() {
+        Chrono.sixMinutesFixBefore1900 = true
+        Chrono.preferredLanguage = .english
+        
+        let chrono = Chrono()
+        let refDate = Date(2026, 0, 20)
+        let results = chrono.parse("List Starbucks spending from 2024", refDate)
+        XCTAssertEqual(results.length, 1)
+        
+        if let result = results.first, let endDate = result.end?.date {
+            XCTAssertEqual(result.start.date.year, 2024)
+            XCTAssertEqual(result.start.date.month, 1)
+            XCTAssertEqual(result.start.date.day, 1)
+            XCTAssertEqual(endDate.year, 2026)
+            XCTAssertEqual(endDate.month, 1)
+            XCTAssertEqual(endDate.day, 20)
+        } else {
+            XCTFail("Expected a from-year range result.")
+        }
+    }
     
     func test24HourInStrictMode() {
         Chrono.sixMinutesFixBefore1900 = true

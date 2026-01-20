@@ -6,6 +6,7 @@
 //  Copyright © 2017 Potix. All rights reserved.
 //
 
+import SwiftyChrono
 import XCTest
 import JavaScriptCore
 

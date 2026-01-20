@@ -45,6 +45,65 @@ test("Test - Single Expression", function() {
 });
 
 
+test("Test - Year Ranges", function() {
+    var refDate = new Date(2026, 0, 20);
+
+    var text = "2025年のスターバックス支出";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2025, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2025, JSON.stringify(result.end));
+        ok(result.end.get('month') == 12, JSON.stringify(result.end));
+        ok(result.end.get('day') == 31, JSON.stringify(result.end));
+    }
+
+    var text = "今年のスターバックス支出";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2026, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+
+    var text = "去年のスターバックス支出";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2025, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2025, JSON.stringify(result.end));
+        ok(result.end.get('month') == 12, JSON.stringify(result.end));
+        ok(result.end.get('day') == 31, JSON.stringify(result.end));
+    }
+
+    var text = "2024年以来のスターバックス支出";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2024, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+
+    var text = "2024年からのスターバックス支出";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2024, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+});
+
 
 
 

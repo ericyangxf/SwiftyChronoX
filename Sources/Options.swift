@@ -26,6 +26,10 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         ENMonthNameLittleEndianParser(strictMode: strictMode),
         ENMonthNameMiddleEndianParser(strictMode: strictMode),
         ENMonthNameParser(strictMode: strictMode),
+        ENYearParser(strictMode: strictMode),
+        ENThisYearParser(strictMode: strictMode),
+        ENSinceYearParser(strictMode: strictMode),
+        ENFromYearParser(strictMode: strictMode),
         ENSlashDateFormatParser(strictMode: strictMode),
         ENSlashDateFormatStartWithYearParser(strictMode: strictMode),
         ENSlashMonthFormatParser(strictMode: strictMode),
@@ -33,9 +37,19 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         ENTimeExpressionParser(strictMode: strictMode),
         
         // JP
+        JPYearParser(strictMode: strictMode),
+        JPThisYearParser(strictMode: strictMode),
+        JPLastYearParser(strictMode: strictMode),
+        JPSinceYearParser(strictMode: strictMode),
+        JPFromYearParser(strictMode: strictMode),
         JPStandardParser(strictMode: strictMode),
         
         // ES
+        ESYearParser(strictMode: strictMode),
+        ESThisYearParser(strictMode: strictMode),
+        ESLastYearParser(strictMode: strictMode),
+        ESSinceYearParser(strictMode: strictMode),
+        ESFromYearParser(strictMode: strictMode),
         ESTimeAgoFormatParser(strictMode: strictMode),
         ESDeadlineFormatParser(strictMode: strictMode),
         ESTimeExpressionParser(strictMode: strictMode),
@@ -43,6 +57,11 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         ESSlashDateFormatParser(strictMode: strictMode),
         
         // FR
+        FRYearParser(strictMode: strictMode),
+        FRThisYearParser(strictMode: strictMode),
+        FRLastYearParser(strictMode: strictMode),
+        FRSinceYearParser(strictMode: strictMode),
+        FRFromYearParser(strictMode: strictMode),
         FRDeadlineFormatParser(strictMode: strictMode),
         FRMonthNameLittleEndianParser(strictMode: strictMode),
         FRSlashDateFormatParser(strictMode: strictMode),
@@ -50,6 +69,11 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         FRTimeExpressionParser(strictMode: strictMode),
         
         // DE
+        DEYearParser(strictMode: strictMode),
+        DEThisYearParser(strictMode: strictMode),
+        DELastYearParser(strictMode: strictMode),
+        DESinceYearParser(strictMode: strictMode),
+        DEFromYearParser(strictMode: strictMode),
         DEDeadlineFormatParser(strictMode: strictMode),
         DEMonthNameLittleEndianParser(strictMode: strictMode),
         DESlashDateFormatParser(strictMode: strictMode),
@@ -57,6 +81,11 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         DETimeExpressionParser(strictMode: strictMode),
         
         // ZH-Hant
+        ZHYearParser(strictMode: strictMode),
+        ZHThisYearParser(strictMode: strictMode),
+        ZHLastYearParser(strictMode: strictMode),
+        ZHSinceYearParser(strictMode: strictMode),
+        ZHFromYearParser(strictMode: strictMode),
         ZHCasualDateParser(strictMode: strictMode),
         ZHDateParser(strictMode: strictMode),
         ZHDeadlineFormatParser(strictMode: strictMode),

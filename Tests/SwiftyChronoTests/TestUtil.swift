@@ -6,6 +6,7 @@
 //  Copyright © 2017 Potix. All rights reserved.
 //
 import Foundation
+import SwiftyChrono
 import XCTest
 import JavaScriptCore
 
@@ -52,10 +53,10 @@ extension Date {
     
     /// ATTENTION: this is Javascript compatible init function.
     /// the range of month is between 0 ~ 11
-    init(_ year: Int, _ month: Int, _ date: Int = 1, _ hours: Int = 0, _ minutes: Int = 0, _ seconds: Int = 0, _ milliseconds: Int = 0) {
-        let component = DateComponents(calendar: cal, timeZone: TimeZone.current, year: year, month: month + 1, day: date, hour: hours, minute: minutes, second: seconds, nanosecond: millisecondsToNanoSeconds(milliseconds))
-        self = component.date ?? Date()
-    }
+//    init(_ year: Int, _ month: Int, _ date: Int = 1, _ hours: Int = 0, _ minutes: Int = 0, _ seconds: Int = 0, _ milliseconds: Int = 0) {
+//        let component = DateComponents(calendar: cal, timeZone: TimeZone.current, year: year, month: month + 1, day: date, hour: hours, minute: minutes, second: seconds, nanosecond: millisecondsToNanoSeconds(milliseconds))
+//        self = component.date ?? Date()
+//    }
     
     static let iso8601Formatter: DateFormatter = {
         let formatter = DateFormatter()

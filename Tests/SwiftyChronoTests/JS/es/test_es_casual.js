@@ -255,3 +255,63 @@ test('Test - Random negative text', function() {
     ok(results.length == 0, JSON.stringify(results) )
 
 })
+
+
+test("Test - Year Ranges", function() {
+    var refDate = new Date(2026, 0, 20);
+
+    var text = "Lista gastos de Starbucks en 2025";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2025, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2025, JSON.stringify(result.end));
+        ok(result.end.get('month') == 12, JSON.stringify(result.end));
+        ok(result.end.get('day') == 31, JSON.stringify(result.end));
+    }
+
+    var text = "Lista gastos de Starbucks este año";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2026, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+
+    var text = "Lista gastos de Starbucks el año pasado";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2025, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2025, JSON.stringify(result.end));
+        ok(result.end.get('month') == 12, JSON.stringify(result.end));
+        ok(result.end.get('day') == 31, JSON.stringify(result.end));
+    }
+
+    var text = "Lista gastos de Starbucks desde 2024";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2024, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+
+    var text = "Lista gastos de Starbucks a partir de 2024";
+    var result = chrono.parse(text, refDate)[0];
+    if (result) {
+        ok(result.start.get('year') == 2024, JSON.stringify(result.start));
+        ok(result.start.get('month') == 1, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.end.get('year') == 2026, JSON.stringify(result.end));
+        ok(result.end.get('month') == 1, JSON.stringify(result.end));
+        ok(result.end.get('day') == 20, JSON.stringify(result.end));
+    }
+});

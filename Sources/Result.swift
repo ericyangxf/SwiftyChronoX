@@ -190,6 +190,10 @@ public enum TagUnit { case
     enMonthNameLittleEndianParser,
     enMonthNameMiddleEndianParser,
     enMonthNameParser,
+    enYearParser,
+    enThisYearParser,
+    enSinceYearParser,
+    enFromYearParser,
     enRelativeDateFormatParser,
     enSlashDateFormatParser,
     enSlashDateFormatStartWithYearParser,
@@ -200,6 +204,11 @@ public enum TagUnit { case
     
     esCasualDateParser,
     esDeadlineFormatParser,
+    esYearParser,
+    esThisYearParser,
+    esLastYearParser,
+    esSinceYearParser,
+    esFromYearParser,
     esMonthNameLittleEndianParser,
     esSlashDateFormatParser,
     esTimeAgoFormatParser,
@@ -208,6 +217,11 @@ public enum TagUnit { case
     
     frCasualDateParser,
     frDeadlineFormatParser,
+    frYearParser,
+    frThisYearParser,
+    frLastYearParser,
+    frSinceYearParser,
+    frFromYearParser,
     frMonthNameLittleEndianParser,
     frSlashDateFormatParser,
     frTimeAgoFormatParser,
@@ -215,11 +229,21 @@ public enum TagUnit { case
     frWeekdayParser,
     
     jpCasualDateParser,
+    jpYearParser,
+    jpThisYearParser,
+    jpLastYearParser,
+    jpSinceYearParser,
+    jpFromYearParser,
     jpStandardParser,
     
     deCasualTimeParser,
     deCasualDateParser,
     deDeadlineFormatParser,
+    deYearParser,
+    deThisYearParser,
+    deLastYearParser,
+    deSinceYearParser,
+    deFromYearParser,
     deMonthNameLittleEndianParser,
     deSlashDateFormatParser,
     deTimeAgoFormatParser,
@@ -227,6 +251,11 @@ public enum TagUnit { case
     deWeekdayParser,
     deMorgenTimeParser,
     
+    zhYearParser,
+    zhThisYearParser,
+    zhLastYearParser,
+    zhSinceYearParser,
+    zhFromYearParser,
     zhHantCasualDateParser,
     zhHantDateParser,
     zhHantDeadlineFormatParser,
@@ -248,11 +277,6 @@ public enum TagUnit { case
     deMergeDateAndTimeRefiner,
     deMergeDateRangeRefiner
 }
-
-
-
-
-
 
 
 
