@@ -2,7 +2,7 @@
 
 A natural language date parser in Swift, designed to extract date information from any given text.
  
-When we were [integrating Siri](https://quire.io/blog/p/Quire-Siri-Best-Task-Manager-Friend.html) with our [iOS app](https://itunes.apple.com/us/app/quire-task-manager-for-teams/id1095193897?mt=8), we found that JavascriptCore runtime is running on resource-limited extensions and will crash due to memory limitation. So, we created a Swift version. Thanks to Wanasit Tanakitrungruang's [chrono.js](https://github.com/wanasit/chrono).
+Improved Date parsing. Disabled time parsing due to test case failures.
 
 SwiftyChrono supports most date and time formats, such as:
 * Today, Tomorrow, Yesterday, Last Friday, etc
