@@ -2,7 +2,7 @@
 
 A natural language date parser in Swift, designed to extract date information from any given text.
  
-Improved Date parsing. Disabled time parsing due to test case failures.
+**Improved Date parsing. Disabled time parsing due to test case failures.**
 
 SwiftyChrono supports most date and time formats, such as:
 * Today, Tomorrow, Yesterday, Last Friday, etc
