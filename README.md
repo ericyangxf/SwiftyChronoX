@@ -14,22 +14,6 @@ SwiftyChrono supports most date and time formats, such as:
 
 There are more available patterns. You can simply download it and try.
 
-### Status
-
-This project is currently being used in the [Quire](https://quire.io) iOS app.
-
-### Requirements
-
-Swift 4.2
-* Xcode 10
-* Swift 4.2
-
-Swift 3
-* iOS 9.0+ | macOS 10.10+ | tvOS 9.0+ | watchOS 2.0+
-* Xcode 8
-* Swift 3.0
-* 64 bit device (didn't test on 32 bit device)
-
 ### Install
 
 Use Swift Package Manager
@@ -123,7 +107,3 @@ Chrono.defaultImpliedMillisecond = 1
 chrono.parseDate(text: "you can do it tomorrow", refDate: refDate)?.timeIntervalSince1970
 // 1485968461.001, 2017/2/1 01:01:01.001
 ```
-
-### Demo Video
-
-[![Everything Is AWESOME](https://img.youtube.com/vi/f5PKHumpwsE/0.jpg)](https://www.youtube.com/watch?v=f5PKHumpwsE "Talk to Siri to Add Tasks")
