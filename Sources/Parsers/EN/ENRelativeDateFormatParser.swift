@@ -27,7 +27,10 @@ public class ENRelativeDateFormatParser: Parser {
         let (matchText, index) = matchTextAndIndex(from: text, andMatchResult: match)
         var result = ParsedResult(ref: ref, index: index, text: matchText)
         
-        let modifier = match.isNotEmpty(atRangeIndex: modifierWordGroup) && NSRegularExpression.isMatch(forPattern: "^next", in: match.string(from: text, atRangeIndex: modifierWordGroup).lowercased()) ? 1 : -1
+        let modifierText = match.isNotEmpty(atRangeIndex: modifierWordGroup) ? match.string(from: text, atRangeIndex: modifierWordGroup).lowercased() : ""
+        let isNextModifier = NSRegularExpression.isMatch(forPattern: "^next", in: modifierText)
+        let isLastModifier = NSRegularExpression.isMatch(forPattern: "^last", in: modifierText)
+        let modifier = isNextModifier ? 1 : -1
         result.tags[.enRelativeDateFormatParser] = true
         
         var number: Int
@@ -47,6 +50,9 @@ public class ENRelativeDateFormatParser: Parser {
         let isHalf = number == HALF
         number *= modifier
         let hasExplicitMultiplier = !numberText.isEmpty
+        let prefixText = text.substring(from: 0, to: index).lowercased()
+        let hasSincePrefix = NSRegularExpression.isMatch(forPattern: "\\bsince\\s*$", in: prefixText)
+        let hasInPrefix = NSRegularExpression.isMatch(forPattern: "\\bin\\s*$", in: prefixText)
 
         var date = ref
         if match.isNotEmpty(atRangeIndex: relativeWordGroup) {
@@ -58,12 +64,32 @@ public class ENRelativeDateFormatParser: Parser {
                 result.start.assign(.month, value: date.month)
                 result.start.assign(.day, value: date.day)
             } else if NSRegularExpression.isMatch(forPattern: "week", in: relativeWord) {
-                date = isHalf ? date.added(modifier * 3, .day).added(number * 12 , .hour) : date.added(number * 7, .day)
-                // We don't know the exact date for next/last week so we imply
-                // them
-                result.start.imply(.day, to: date.day)
-                result.start.imply(.month, to: date.month)
-                result.start.imply(.year, to: date.year)
+                let isSingleWeekRange = !hasExplicitMultiplier && !isHalf
+                let shouldUseCalendarWeekRange = isSingleWeekRange && (isLastModifier || isNextModifier || hasSincePrefix || hasInPrefix)
+                if shouldUseCalendarWeekRange {
+                    let offsetToMonday = (ref.weekday + 6) % 7
+                    let currentWeekMonday = ref.added(-offsetToMonday, .day)
+                    let rangeStart = currentWeekMonday.added(number * 7, .day)
+
+                    result.start.assign(.year, value: rangeStart.year)
+                    result.start.assign(.month, value: rangeStart.month)
+                    result.start.assign(.day, value: rangeStart.day)
+
+                    if !hasSincePrefix {
+                        let rangeEnd = rangeStart.added(6, .day)
+                        result.end = ParsedComponents(components: nil, ref: result.start.date)
+                        result.end?.assign(.year, value: rangeEnd.year)
+                        result.end?.assign(.month, value: rangeEnd.month)
+                        result.end?.assign(.day, value: rangeEnd.day)
+                    }
+                } else {
+                    date = isHalf ? date.added(modifier * 3, .day).added(number * 12 , .hour) : date.added(number * 7, .day)
+                    // We don't know the exact date for next/last week so we imply
+                    // them
+                    result.start.imply(.day, to: date.day)
+                    result.start.imply(.month, to: date.month)
+                    result.start.imply(.year, to: date.year)
+                }
             } else if NSRegularExpression.isMatch(forPattern: "month", in: relativeWord) {
                 date = isHalf ? date.added(modifier * (date.numberOf(.day, inA: .month) ?? 30)/2 , .day) : date.added(number * 1, .month)
                 let isSingleMonthRange = !hasExplicitMultiplier && !isHalf

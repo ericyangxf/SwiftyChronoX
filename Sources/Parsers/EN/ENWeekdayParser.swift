@@ -70,9 +70,14 @@ public class ENWeekdayParser: Parser {
     override public func extract(text: String, ref: Date, match: NSTextCheckingResult, opt: [OptionType: Int]) -> ParsedResult? {
         let (matchText, index) = matchTextAndIndex(from: text, andMatchResult: match)
         var result = ParsedResult(ref: ref, index: index, text: matchText)
-        
+
         let dayOfWeek = match.string(from: text, atRangeIndex: weekdayGroup).lowercased()
         guard let offset = EN_WEEKDAY_OFFSET[dayOfWeek] else {
+            return nil
+        }
+
+        // Skip "mon" when French is preferred to avoid conflict with French "mon" (= "my")
+        if let lang = Chrono._currentParseLanguage, lang == .french, dayOfWeek == "mon" {
             return nil
         }
         

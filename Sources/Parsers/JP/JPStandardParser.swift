@@ -23,41 +23,19 @@ public class JPStandardParser: Parser {
     override public func extract(text: String, ref: Date, match: NSTextCheckingResult, opt: [OptionType: Int]) -> ParsedResult? {
         let index = match.range(at: 0).location
         let matchText = match.string(from: text, atRangeIndex: 0)
-        
+
         var startMoment = ref
         var result = ParsedResult(ref: ref, index: index, text: matchText)
-        
+
         let month = Int(match.string(from: text, atRangeIndex: monthGroup).hankakuOnlyNumber) ?? 0
-        
         let day = Int(match.string(from: text, atRangeIndex: dayGroup).hankakuOnlyNumber) ?? 0
-        
-        
-        startMoment = startMoment
-            .setOrAdded(day, .day)
-            .setOrAdded(month, .month)
-        
-        result.start.assign(.day, value: startMoment.day)
-        result.start.assign(.month, value: startMoment.month)
-        
-        
+
+        // Determine the year first to avoid leap year issues
+        var explicitYear: Int? = nil
         if match.isEmpty(atRangeIndex: yearGroup) {
-            
-            //Find the most appropriated year
-            startMoment = startMoment.setOrAdded(ref.year, .year)
-            let nextYear = startMoment.added(1, .year)
-            let lastYear = startMoment.added(-1, .year)
-            
-            if abs(nextYear.differenceOfTimeInterval(to: ref)) < abs(startMoment.differenceOfTimeInterval(to: ref)) {
-                startMoment = nextYear
-            } else if abs(lastYear.differenceOfTimeInterval(to: ref)) < abs(startMoment.differenceOfTimeInterval(to: ref)) {
-                startMoment = lastYear
-            }
-            
-            result.start.assign(.day, value: startMoment.day)
-            result.start.assign(.month, value: startMoment.month)
-            result.start.imply(.year, to: startMoment.year)
-        } else if NSRegularExpression.isMatch(forPattern: "同年", in: text) {
-            result.start.assign(.year, value: startMoment.year)
+            // no explicit year
+        } else if NSRegularExpression.isMatch(forPattern: "同年", in: matchText) {
+            explicitYear = ref.year
         } else {
             var year = Int(match.string(from: text, atRangeIndex: yearNumberGroup).hankakuOnlyNumber) ?? 0
             if match.isNotEmpty(atRangeIndex: eraGroup) {
@@ -68,10 +46,40 @@ public class JPStandardParser: Parser {
                     year += 1925
                 }
             }
-            
-            result.start.assign(.year, value: year)
+            explicitYear = year
         }
-        
+
+        // Set year on startMoment before month/day to handle leap years correctly
+        if let year = explicitYear {
+            startMoment = startMoment.setOrAdded(year, .year)
+        }
+
+        startMoment = startMoment
+            .setOrAdded(month, .month)
+            .setOrAdded(day, .day)
+
+        result.start.assign(.day, value: startMoment.day)
+        result.start.assign(.month, value: startMoment.month)
+
+        if let year = explicitYear {
+            result.start.assign(.year, value: year)
+        } else {
+            //Find the most appropriated year
+            startMoment = startMoment.setOrAdded(ref.year, .year)
+            let nextYear = startMoment.added(1, .year)
+            let lastYear = startMoment.added(-1, .year)
+
+            if abs(nextYear.differenceOfTimeInterval(to: ref)) < abs(startMoment.differenceOfTimeInterval(to: ref)) {
+                startMoment = nextYear
+            } else if abs(lastYear.differenceOfTimeInterval(to: ref)) < abs(startMoment.differenceOfTimeInterval(to: ref)) {
+                startMoment = lastYear
+            }
+
+            result.start.assign(.day, value: startMoment.day)
+            result.start.assign(.month, value: startMoment.month)
+            result.start.imply(.year, to: startMoment.year)
+        }
+
         result.tags[.jpStandardParser] = true
         return result
     }

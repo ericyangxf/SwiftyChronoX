@@ -193,6 +193,7 @@ public enum TagUnit { case
     enYearParser,
     enThisYearParser,
     enThisMonthParser,
+    enThisWeekParser,
     enSinceYearParser,
     enFromYearParser,
     enRelativeDateFormatParser,
@@ -212,11 +213,14 @@ public enum TagUnit { case
     esFromYearParser,
     esThisMonthParser,
     esLastMonthParser,
+    esRelativeDateFormatParser,
     esMonthNameLittleEndianParser,
     esSlashDateFormatParser,
     esTimeAgoFormatParser,
     esTimeExpressionParser,
     esWeekdayParser,
+    esMonthNameParser,
+    esThisWeekParser,
     
     frCasualDateParser,
     frDeadlineFormatParser,
@@ -227,7 +231,10 @@ public enum TagUnit { case
     frFromYearParser,
     frThisMonthParser,
     frLastMonthParser,
+    frRelativeDateFormatParser,
+    frMonthNameParser,
     frMonthNameLittleEndianParser,
+    frThisWeekParser,
     frSlashDateFormatParser,
     frTimeAgoFormatParser,
     frTimeExpressionParser,
@@ -242,6 +249,12 @@ public enum TagUnit { case
     jpThisMonthParser,
     jpLastMonthParser,
     jpStandardParser,
+    jpWeekdayParser,
+    jpTimeAgoFormatParser,
+    jpRelativeDateFormatParser,
+    jpThisWeekParser,
+    jpMonthNameParser,
+    jpDeadlineFormatParser,
     
     deCasualTimeParser,
     deCasualDateParser,
@@ -253,7 +266,10 @@ public enum TagUnit { case
     deFromYearParser,
     deThisMonthParser,
     deLastMonthParser,
+    deRelativeDateFormatParser,
+    deMonthNameParser,
     deMonthNameLittleEndianParser,
+    deThisWeekParser,
     deSlashDateFormatParser,
     deTimeAgoFormatParser,
     deTimeExpressionParser,
@@ -272,7 +288,12 @@ public enum TagUnit { case
     zhHantDeadlineFormatParser,
     zhHantTimeExpressionParser,
     zhHantWeekdayParser,
-    
+    zhTimeAgoFormatParser,
+    zhRelativeDateFormatParser,
+    zhMonthNameParser,
+    zhThisWeekParser,
+    zhMergeDateRangeRefiner,
+
     extractTimezoneAbbrRefiner,
     extractTimezoneOffsetRefiner,
     forwardDateRefiner,
@@ -290,6 +311,4 @@ public enum TagUnit { case
     deMergeDateAndTimeRefiner,
     deMergeDateRangeRefiner
 }
-
-
 

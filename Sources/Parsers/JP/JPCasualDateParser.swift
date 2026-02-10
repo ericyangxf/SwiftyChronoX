@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let PATTERN = "今日|当日|昨日|明日|今夜|今夕|今晩|今朝"
+private let PATTERN = "今日|当日|昨日|明日|今夜|今夕|今晩|今朝|昨夜|今すぐ"
 
 public class JPCasualDateParser: Parser {
     override var pattern: String { return PATTERN }
@@ -34,6 +34,12 @@ public class JPCasualDateParser: Parser {
             }
         } else if matchText == "昨日" {
             startMoment = startMoment.added(-1, .day)
+        } else if matchText == "昨夜" {
+            startMoment = startMoment.added(-1, .day)
+            result.start.imply(.hour, to: 22)
+            result.start.imply(.meridiem, to: 1)
+        } else if matchText == "今すぐ" {
+            // now - just use ref date
         } else if NSRegularExpression.isMatch(forPattern: "今朝", in: matchText) {
             result.start.imply(.hour, to: 6)
             result.start.imply(.meridiem, to: 0)

@@ -29,6 +29,7 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         ENYearParser(strictMode: strictMode),
         ENThisYearParser(strictMode: strictMode),
         ENThisMonthParser(strictMode: strictMode),
+        ENThisWeekParser(strictMode: strictMode),
         ENSinceYearParser(strictMode: strictMode),
         ENFromYearParser(strictMode: strictMode),
         ENSlashDateFormatParser(strictMode: strictMode),
@@ -38,6 +39,7 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         // ENTimeExpressionParser disabled - date parsing only
 
         // JP
+        JPYearRangeParser(strictMode: strictMode),
         JPYearParser(strictMode: strictMode),
         JPThisYearParser(strictMode: strictMode),
         JPLastYearParser(strictMode: strictMode),
@@ -45,7 +47,14 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         JPFromYearParser(strictMode: strictMode),
         JPThisMonthParser(strictMode: strictMode),
         JPLastMonthParser(strictMode: strictMode),
+        JPDateRangeParser(strictMode: strictMode),
         JPStandardParser(strictMode: strictMode),
+        JPDeadlineFormatParser(strictMode: strictMode),
+        JPTimeAgoFormatParser(strictMode: strictMode),
+        JPMonthNameParser(strictMode: strictMode),
+        JPThisWeekParser(strictMode: strictMode),
+        JPISOFormatParser(strictMode: strictMode),
+        JPSlashDateFormatParser(strictMode: strictMode),
 
         // ES
         ESYearParser(strictMode: strictMode),
@@ -59,6 +68,8 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         ESDeadlineFormatParser(strictMode: strictMode),
         // ESTimeExpressionParser disabled - date parsing only
         ESMonthNameLittleEndianParser(strictMode: strictMode),
+        ESMonthNameParser(strictMode: strictMode),
+        ESYearRangeParser(strictMode: strictMode),
         ESSlashDateFormatParser(strictMode: strictMode),
 
         // FR
@@ -67,10 +78,12 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         FRLastYearParser(strictMode: strictMode),
         FRSinceYearParser(strictMode: strictMode),
         FRFromYearParser(strictMode: strictMode),
+        FRYearRangeParser(strictMode: strictMode),
         FRThisMonthParser(strictMode: strictMode),
         FRLastMonthParser(strictMode: strictMode),
         FRDeadlineFormatParser(strictMode: strictMode),
         FRMonthNameLittleEndianParser(strictMode: strictMode),
+        FRMonthNameParser(strictMode: strictMode),
         FRSlashDateFormatParser(strictMode: strictMode),
         FRTimeAgoFormatParser(strictMode: strictMode),
         // FRTimeExpressionParser disabled - date parsing only
@@ -85,11 +98,14 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         DELastMonthParser(strictMode: strictMode),
         DEDeadlineFormatParser(strictMode: strictMode),
         DEMonthNameLittleEndianParser(strictMode: strictMode),
+        DEMonthNameParser(strictMode: strictMode),
+        DEYearRangeParser(strictMode: strictMode),
         DESlashDateFormatParser(strictMode: strictMode),
         DETimeAgoFormatParser(strictMode: strictMode),
         // DETimeExpressionParser disabled - date parsing only
 
         // ZH-Hant
+        ZHYearRangeParser(strictMode: strictMode),
         ZHYearParser(strictMode: strictMode),
         ZHThisYearParser(strictMode: strictMode),
         ZHLastYearParser(strictMode: strictMode),
@@ -98,8 +114,15 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         ZHThisMonthParser(strictMode: strictMode),
         ZHLastMonthParser(strictMode: strictMode),
         ZHCasualDateParser(strictMode: strictMode),
+        ZHDateRangeParser(strictMode: strictMode),
         ZHDateParser(strictMode: strictMode),
         ZHDeadlineFormatParser(strictMode: strictMode),
+        ZHTimeAgoFormatParser(strictMode: strictMode),
+        ZHMonthNameParser(strictMode: strictMode),
+        ZHThisWeekParser(strictMode: strictMode),
+        ZHRelativeDateFormatParser(strictMode: strictMode),
+        ZHISOFormatParser(strictMode: strictMode),
+        ZHSlashDateFormatParser(strictMode: strictMode),
         // ZHTimeExpressionParser disabled - date parsing only
         ZHWeekdayParser(strictMode: strictMode),
 
@@ -115,9 +138,16 @@ private func baseOption(strictMode: Bool) -> ModeOptio {
         FRMergeDateRangeRefiner(),
         JPMergeDateRangeRefiner(),
         DEMergeDateRangeRefiner(),
+        ZHMergeDateRangeRefiner(),
 
         ForwardDateRefiner(),
         BackwardDateRefiner(),
+        ENSingleDateDefaultEndRefiner(),
+        FRSingleDateDefaultEndRefiner(),
+        ESSingleDateDefaultEndRefiner(),
+        DESingleDateDefaultEndRefiner(),
+        JPSingleDateDefaultEndRefiner(),
+        ZHSingleDateDefaultEndRefiner(),
 
         UnlikelyFormatFilter(),
     ])
@@ -139,19 +169,27 @@ public func casualModeOption() -> ModeOptio {
 
         // JP
         JPCasualDateParser(strictMode: false),
+        JPRelativeDateFormatParser(strictMode: false),
+        JPWeekdayParser(strictMode: false),
 
         // ES
         ESCasualDateParser(strictMode: false),
+        ESRelativeDateFormatParser(strictMode: false),
         ESWeekdayParser(strictMode: false),
+        ESThisWeekParser(strictMode: false),
 
         // FR
         FRCasualDateParser(strictMode: false),
+        FRRelativeDateFormatParser(strictMode: false),
         FRWeekdayParser(strictMode: false),
+        FRThisWeekParser(strictMode: false),
 
         // DE
         // DECasualTimeParser disabled - date parsing only
         DECasualDateParser(strictMode: false),
+        DERelativeDateFormatParser(strictMode: false),
         DEWeekdayParser(strictMode: false),
+        DEThisWeekParser(strictMode: false),
         // DEMorgenTimeParser disabled - date parsing only
 
     ], at: 0)

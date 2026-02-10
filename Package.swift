@@ -14,14 +14,12 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftyChrono",
-            path: "Sources",
-            exclude: ["Info.plist"]
+            path: "Sources"
         ),
         .testTarget(
             name: "SwiftyChronoTests",
             dependencies: ["SwiftyChrono"],
             path: "Tests/SwiftyChronoTests",
-            exclude: ["Info.plist"],
             resources: [],
             linkerSettings: [
                 .linkedFramework("JavaScriptCore"),

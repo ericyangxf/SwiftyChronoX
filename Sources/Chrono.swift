@@ -90,26 +90,41 @@ public struct Chrono {
     let modeOption: ModeOptio
     var parsers: [Parser] { return modeOption.parsers }
     var refiners: [Refiner] { return modeOption.refiners }
-    
-    public init(modeOption: ModeOptio = casualModeOption()) {
-        self.modeOption = modeOption
+
+    /// Per-instance preferred language. Takes precedence over the static `preferredLanguage`.
+    public var preferredLanguage: Language?
+
+    /// Thread-local storage for the preferred language during a parse call.
+    /// Parsers (e.g. ENWeekdayParser) read this to access the per-call language context.
+    static var _currentParseLanguage: Language? {
+        get { Thread.current.threadDictionary["_chronoParseLanguage"] as? Language }
+        set { Thread.current.threadDictionary["_chronoParseLanguage"] = newValue }
     }
-    
+
+    public init(modeOption: ModeOptio = casualModeOption(), preferredLanguage: Language? = nil) {
+        self.modeOption = modeOption
+        self.preferredLanguage = preferredLanguage
+    }
+
     public func parse(text: String, refDate: Date = Date(), opt: [OptionType: Int] = [:]) -> [ParsedResult] {
         var allResults = [ParsedResult]()
-        
+
         if text.isEmpty {
             return allResults
         }
-        
-        if let lang = Chrono.preferredLanguage {
+
+        let lang = self.preferredLanguage ?? Chrono.preferredLanguage
+        Chrono._currentParseLanguage = lang
+        defer { Chrono._currentParseLanguage = nil }
+
+        if let lang = lang {
             // first phase: preferredLanguage parsers
             for parser in parsers {
                 if parser.language == .english || parser.language == lang {
                     allResults += parser.execute(text: text, ref: refDate, opt: opt)
                 }
             }
-            
+
             // second phase: other language parsers
             if allResults.isEmpty {
                 for parser in parsers {
@@ -123,13 +138,13 @@ public struct Chrono {
                 allResults += parser.execute(text: text, ref: refDate, opt: opt)
             }
         }
-        
+
         allResults.sort { $0.index < $1.index }
-        
+
         for refiner in refiners {
             allResults = refiner.refine(text: text, results: allResults, opt: opt)
         }
-        
+
         return allResults
     }
     

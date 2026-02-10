@@ -9,7 +9,7 @@
 import Foundation
 
 class FRMergeDateRangeRefiner: MergeDateRangeRefiner {
-    override var PATTERN: String { return "^\\s*(à|a|\\-)\\s*$" }
+    override var PATTERN: String { return "^\\s*(à|au|a|\\-)\\s*$" }
     override var TAGS: TagUnit { return .frMergeDateRangeRefiner }
 
     override func isAbleToMerge(text: String, result1: ParsedResult, result2: ParsedResult) -> Bool {
@@ -19,11 +19,11 @@ class FRMergeDateRangeRefiner: MergeDateRangeRefiner {
 
         let (startIndex, endIndex) = sortTwoNumbers(result1.index + result1.text.count, result2.index)
         let textBetween = text.substring(from: startIndex, to: endIndex)
-        guard NSRegularExpression.isMatch(forPattern: "^\\s*et\\s*$", in: textBetween) else {
+        guard NSRegularExpression.isMatch(forPattern: "^\\s*et\\s+(?:l[ea']?\\s*)?$", in: textBetween) else {
             return false
         }
 
         let prefixText = text.substring(from: 0, to: result1.index)
-        return NSRegularExpression.isMatch(forPattern: "\\bentre\\s*$", in: prefixText)
+        return NSRegularExpression.isMatch(forPattern: "\\bentre\\s+(?:l[ea']?\\s*)?$", in: prefixText)
     }
 }

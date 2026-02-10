@@ -11,7 +11,7 @@ import Foundation
 private let PATTERN =
     "(\\d+|\(ZH_NUMBER_PATTERN)+|半|幾|几)(?:\\s*)" +
     "(?:個|个)?" +
-    "(秒(?:鐘|钟)?|分鐘|小時|鐘|日|天|星期|禮拜|月|年|分钟|小时|钟|礼拜)" +
+    "(秒(?:鐘|钟)?|分鐘|小時|鐘|日|天|周|週|星期|禮拜|月|年|分钟|小时|钟|礼拜)" +
 		"(?:(?:之|過)?後|(?:之)?(內|内)|(?:之|过)?后)"
 
 private let numberGroup = 1
@@ -56,7 +56,7 @@ public class ZHDeadlineFormatParser: Parser {
         if unitAbbr == "日" || unitAbbr == "天" {
             date = number == HALF ? date.added(12, .hour) : date.added(number, .day)
             return ymdResult()
-        } else if unitAbbr == "星" || unitAbbr == "禮" || unitAbbr == "礼"  {
+        } else if unitAbbr == "周" || unitAbbr == "週" || unitAbbr == "星" || unitAbbr == "禮" || unitAbbr == "礼"  {
             date = number == HALF ? date.added(3, .day).added(12, .hour) : date.added(number * 7, .day)
             return ymdResult()
         } else if unitAbbr == "月" {

@@ -13,7 +13,7 @@ private let PATTERN = "(\\W|^)" +
     "(?:(este|pasado|pr[oó]ximo)\\s*)?" +
     "(\(ES_WEEKDAY_OFFSET.keys.joined(separator: "|")))" +
     "(?:\\s*(?:\\,|\\)|\\）))?" +
-    "(?:\\s*(este|pasado|pr[óo]ximo)\\s*week)?" +
+    "(?:\\s*(este|pasado|pr[óo]ximo))?" +
     "(?=\\W|$)"
 
 private let prefixGroup = 2

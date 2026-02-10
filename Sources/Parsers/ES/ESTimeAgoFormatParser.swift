@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let PATTERN = "(\\W|^)hace\\s*([0-9]+|medi[oa]|una?)\\s*(minutos?|horas?|semanas?|d[ií]as?|mes(es)?|años?)(?=(?:\\W|$))"
+private let PATTERN = "(\\W|^)hace\\s*([0-9]+|medi[oa]|una?|unos?)\\s*(minutos?|horas?|semanas?|d[ií]as?|mes(es)?|años?)(?=(?:\\W|$))"
 
 
 
@@ -33,6 +33,8 @@ public class ESTimeAgoFormatParser: Parser {
         if parsedNumber == nil {
             if NSRegularExpression.isMatch(forPattern: "medi", in: numberText) {
                 number = HALF
+            } else if NSRegularExpression.isMatch(forPattern: "unos", in: numberText) {
+                number = 3
             } else {
                 number = 1
             }

@@ -28,6 +28,16 @@ let ES_WEEKDAY_OFFSET = [
     "sab": 6,
 ]
 
+let ES_INTEGER_WORDS_PATTERN = "un[oa]?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce"
+
+let ES_INTEGER_WORDS: [String: Int] = [
+    "un": 1, "una": 1, "uno": 1,
+    "dos": 2, "tres": 3, "cuatro": 4,
+    "cinco": 5, "seis": 6, "siete": 7,
+    "ocho": 8, "nueve": 9, "diez": 10,
+    "once": 11, "doce": 12,
+]
+
 let ES_MONTH_OFFSET = [
     "enero": 1,
     "ene": 1,

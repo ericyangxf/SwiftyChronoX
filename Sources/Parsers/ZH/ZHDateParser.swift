@@ -30,12 +30,18 @@ public class ZHDateParser: Parser {
     override var language: Language { return .chinese }
     
     override public func extract(text: String, ref: Date, match: NSTextCheckingResult, opt: [OptionType: Int]) -> ParsedResult? {
+        // Skip matches without a day - let ZHMonthNameParser handle month-only patterns
+        let hasDay = match.isNotEmpty(atRangeIndex: dayGroup)
+        if !hasDay {
+            return nil
+        }
+
         let (matchText, index) = matchTextAndIndexForCHHant(from: text, andMatchResult: match)
         var result = ParsedResult(ref: ref, index: index, text: matchText)
-        
+
         let refMoment = ref
         let startMoment = refMoment
-        
+
         //Month
         let monthString = match.string(from: text, atRangeIndex: monthGroup)
         guard let month = NSRegularExpression.isMatch(forPattern: "\\d+", in: monthString) ? Int(monthString) : ZHStringToNumber(text: monthString) else {

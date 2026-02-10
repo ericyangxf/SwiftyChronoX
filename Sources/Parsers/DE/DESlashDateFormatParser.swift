@@ -8,8 +8,8 @@
 import Foundation
 
 private let PATTERN = "(\\W|^)" +
+    "(?:am\\s+)?" +
     "(?:" +
-        "(?:(?:am)\\s*?)?" +
         "(\(DE_WEEKDAY_WORDS_PATTERN)(?:.?,?\\s*de[rnms])?)" +
         "\\s*\\,?\\s*" +
     ")?" +

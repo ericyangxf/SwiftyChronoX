@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let PATTERN = "(\\W|^)il y a\\s*([0-9]+|une?)\\s*(minutes?|heures?|semaines?|jours?|mois|années?|ans?)(?=(?:\\W|$))"
+private let PATTERN = "(\\W|^)il y a\\s*([0-9]+|une?|quelques)\\s*(minutes?|heures?|semaines?|jours?|mois|années?|ans?)(?=(?:\\W|$))"
 
 
 
@@ -33,6 +33,8 @@ public class FRTimeAgoFormatParser: Parser {
         if parsedNumber == nil {
             if NSRegularExpression.isMatch(forPattern: "demi", in: numberText) {
                 number = HALF
+            } else if NSRegularExpression.isMatch(forPattern: "quelques", in: numberText) {
+                number = 3
             } else {
                 number = 1
             }

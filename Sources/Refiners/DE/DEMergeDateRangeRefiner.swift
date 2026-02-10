@@ -19,11 +19,11 @@ class DEMergeDateRangeRefiner: MergeDateRangeRefiner {
 
         let (startIndex, endIndex) = sortTwoNumbers(result1.index + result1.text.count, result2.index)
         let textBetween = text.substring(from: startIndex, to: endIndex)
-        guard NSRegularExpression.isMatch(forPattern: "^\\s*und\\s*$", in: textBetween) else {
+        guard NSRegularExpression.isMatch(forPattern: "^\\s*und\\s+(?:dem|den|der)?\\s*$", in: textBetween) else {
             return false
         }
 
         let prefixText = text.substring(from: 0, to: result1.index)
-        return NSRegularExpression.isMatch(forPattern: "\\bzwischen\\s*$", in: prefixText)
+        return NSRegularExpression.isMatch(forPattern: "\\bzwischen\\s+(?:dem|den|der)?\\s*$", in: prefixText)
     }
 }

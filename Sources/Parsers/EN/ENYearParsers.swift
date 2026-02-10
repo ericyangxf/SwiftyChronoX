@@ -23,10 +23,12 @@ private let SINCE_YEAR_PATTERN = "(^|\\s)" +
 
 private let FROM_YEAR_PATTERN = "(^|\\s)" +
     "from\\s+([1-2]\\d{3})" +
+    "(?:\\s*(?:to|through|thru|until|till|-)\\s*([1-2]\\d{3}))?" +
     "(?!\\s*[-/\\.]\\s*\\d)" +
     "(?=\\b|\\s|$)"
 
 private let yearGroup = 2
+private let endYearGroup = 3
 
 public class ENYearParser: Parser {
     override var pattern: String { return YEAR_PATTERN }
@@ -108,6 +110,8 @@ public class ENFromYearParser: Parser {
     override public func extract(text: String, ref: Date, match: NSTextCheckingResult, opt: [OptionType: Int]) -> ParsedResult? {
         let (matchText, index) = matchTextAndIndex(from: text, andMatchResult: match)
         let yearText = match.string(from: text, atRangeIndex: yearGroup)
+        let endYearText = match.isNotEmpty(atRangeIndex: endYearGroup) ?
+            match.string(from: text, atRangeIndex: endYearGroup) : ""
         
         guard let year = Int(yearText) else {
             return nil
@@ -119,9 +123,15 @@ public class ENFromYearParser: Parser {
         result.start.assign(.day, value: 1)
         
         result.end = ParsedComponents(components: nil, ref: ref)
-        result.end?.assign(.year, value: ref.year)
-        result.end?.assign(.month, value: ref.month)
-        result.end?.assign(.day, value: ref.day)
+        if let endYear = Int(endYearText) {
+            result.end?.assign(.year, value: endYear)
+            result.end?.assign(.month, value: 12)
+            result.end?.assign(.day, value: 31)
+        } else {
+            result.end?.assign(.year, value: ref.year)
+            result.end?.assign(.month, value: ref.month)
+            result.end?.assign(.day, value: ref.day)
+        }
         
         result.yearText = yearText
         result.tags[.enFromYearParser] = true

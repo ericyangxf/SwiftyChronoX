@@ -7,7 +7,7 @@
 
 import Foundation
 
-private let YEAR_PATTERN = "(^|\\s)(?:en|pendant|pour)\\s+(?:l'\\s*)?(?:(?:ann\\u00e9e)|an)?\\s*([1-2]\\d{3})" +
+private let YEAR_PATTERN = "(^|\\s)(?:en|pendant|pour|durant)\\s+(?:l'\\s*)?(?:(?:ann\\u00e9e)|an)?\\s*([1-2]\\d{3})" +
     "(?!\\s*[-/\\.]\\s*\\d)(?=\\b|\\s|$)"
 private let THIS_YEAR_PATTERN = "(^|\\s)(?:cette\\s+ann\\u00e9e|cet\\s+an)(?=\\b|\\s|$)"
 private let LAST_YEAR_PATTERN = "(^|\\s)(?:l'\\s*)?(?:ann\\u00e9e\\s+derni\\u00e8re|an\\s+dernier)(?=\\b|\\s|$)"
@@ -15,6 +15,7 @@ private let SINCE_YEAR_PATTERN = "(^|\\s)depuis\\s+(?:l'\\s*)?(?:(?:ann\\u00e9e)
     "(?!\\s*[-/\\.]\\s*\\d)(?=\\b|\\s|$)"
 private let FROM_YEAR_PATTERN = "(^|\\s)(?:a|\\u00e0)\\s+partir\\s+de\\s+(?:l'\\s*)?(?:(?:ann\\u00e9e)|an)?\\s*([1-2]\\d{3})" +
     "(?!\\s*[-/\\.]\\s*\\d)(?=\\b|\\s|$)"
+private let YEAR_RANGE_PATTERN = "(^|\\s)de\\s+([1-2]\\d{3})\\s+(?:à|au)\\s+([1-2]\\d{3})(?=\\b|\\s|$)"
 
 private let yearGroup = 2
 
@@ -135,6 +136,31 @@ public class FRFromYearParser: Parser {
         
         result.yearText = yearText
         result.tags[.frFromYearParser] = true
+        return result
+    }
+}
+
+public class FRYearRangeParser: Parser {
+    override var pattern: String { return YEAR_RANGE_PATTERN }
+    override var language: Language { return .french }
+
+    override public func extract(text: String, ref: Date, match: NSTextCheckingResult, opt: [OptionType: Int]) -> ParsedResult? {
+        let (matchText, index) = matchTextAndIndex(from: text, andMatchResult: match)
+        let startYearText = match.string(from: text, atRangeIndex: 2)
+        let endYearText = match.string(from: text, atRangeIndex: 3)
+        guard let startYear = Int(startYearText), let endYear = Int(endYearText) else {
+            return nil
+        }
+
+        var result = ParsedResult(ref: ref, index: index, text: matchText)
+        result.start.assign(.year, value: startYear)
+        result.start.assign(.month, value: 1)
+        result.start.assign(.day, value: 1)
+        result.end = ParsedComponents(components: nil, ref: ref)
+        result.end?.assign(.year, value: endYear)
+        result.end?.assign(.month, value: 12)
+        result.end?.assign(.day, value: 31)
+        result.tags[.frYearParser] = true
         return result
     }
 }

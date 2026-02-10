@@ -8,13 +8,13 @@
 
 import Foundation
 
-private let YEAR_PATTERN = "(^|\\s)(?:im\\s+jahr|im|in|f\\u00fcr|w\\u00e4hrend)\\s+(?:jahr\\s+)?([1-2]\\d{3})" +
+private let YEAR_PATTERN = "(^|\\s)(?:(?:im\\s+jahr|im|in|f\\u00fcr|w\\u00e4hrend)\\s+(?:(?:das|dem|den|der)\\s+)?(?:jahr\\s+)?)?([1-2]\\d{3})" +
     "(?!\\s*[-/\\.]\\s*\\d)(?=\\b|\\s|$)"
 private let THIS_YEAR_PATTERN = "(^|\\s)diese(?:s|n|m)?\\s+jahr(?=\\b|\\s|$)"
 private let LAST_YEAR_PATTERN = "(^|\\s)(?:letzte|vorige)(?:s|n|m)?\\s+jahr(?=\\b|\\s|$)"
 private let SINCE_YEAR_PATTERN = "(^|\\s)seit\\s+(?:dem\\s+jahr\\s+)?([1-2]\\d{3})" +
     "(?!\\s*[-/\\.]\\s*\\d)(?=\\b|\\s|$)"
-private let FROM_YEAR_PATTERN = "(^|\\s)ab\\s+(?:dem\\s+jahr\\s+)?([1-2]\\d{3})" +
+private let FROM_YEAR_PATTERN = "(^|\\s)(?:ab|aus)\\s+(?:(?:dem|das|den|der)\\s+)?(?:jahr\\s+)?([1-2]\\d{3})" +
     "(?!\\s*[-/\\.]\\s*\\d)(?=\\b|\\s|$)"
 
 private let yearGroup = 2
