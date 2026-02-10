@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let PATTERN = "(\\W|^)((heute|diese[nrms])?\\s*(früh|nachmittag|abend|mittag))"
+private let PATTERN = "(\\W|^)((heute|diese[nrms])?\\s*(früh|nachmittag|abend|mittag))(?=\\W|$)"
 private let timeMatch = 4
 
 public class DECasualTimeParser: Parser {

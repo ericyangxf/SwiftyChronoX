@@ -255,7 +255,10 @@ public enum TagUnit { case
     jpThisWeekParser,
     jpMonthNameParser,
     jpDeadlineFormatParser,
-    
+    jpTimeExpressionParser,
+
+    jpMergeDateAndTimeRefiner,
+
     deCasualTimeParser,
     deCasualDateParser,
     deDeadlineFormatParser,

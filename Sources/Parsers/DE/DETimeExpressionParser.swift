@@ -46,11 +46,27 @@ public class DETimeExpressionParser: Parser {
     override public func extract(text: String, ref: Date, match: NSTextCheckingResult, opt: [OptionType: Int]) -> ParsedResult? {
         // This pattern can be overlaped Ex. [12] AM, 1[2] AM
         let idx = match.range(at: 0).location
-        let str = text.substring(from: idx - 1, to: idx)
-        if idx > 0 && NSRegularExpression.isMatch(forPattern: "\\w", in: str) {
+
+        // Reject false ^ match at search range boundary (not true start of string)
+        if idx > 0 && match.range(at: 1).length == 0 {
             return nil
         }
-        
+
+        // Reject matches preceded by a word character, unless the match
+        // contains an unambiguous time indicator (colon separator, Uhr, or AM/PM)
+        if idx > 0 {
+            let str = text.substring(from: idx - 1, to: idx)
+            if NSRegularExpression.isMatch(forPattern: "\\w", in: str) {
+                let fullMatch = match.string(from: text, atRangeIndex: 0)
+                let hasTimeSep = fullMatch.contains(":") || fullMatch.contains("：")
+                let hasAmPm = match.isNotEmpty(atRangeIndex: amPmHourGroup)
+                let hasUhr = fullMatch.lowercased().contains("uhr")
+                if !hasTimeSep && !hasAmPm && !hasUhr {
+                    return nil
+                }
+            }
+        }
+
         var (matchText, index) = matchTextAndIndex(from: text, andMatchResult: match)
         var result = ParsedResult(ref: ref, index: index, text: matchText)
         result.tags[.deTimeExpressionParser] = true
