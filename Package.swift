@@ -4,21 +4,21 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftyChrono",
+    name: "SwiftyChronoX",
     products: [
         .library(
-            name: "SwiftyChrono",
-            targets: ["SwiftyChrono"]
+            name: "SwiftyChronoX",
+            targets: ["SwiftyChronoX"]
         ),
     ],
     targets: [
         .target(
-            name: "SwiftyChrono",
+            name: "SwiftyChronoX",
             path: "Sources"
         ),
         .testTarget(
-            name: "SwiftyChronoTests",
-            dependencies: ["SwiftyChrono"],
+            name: "SwiftyChronoXTests",
+            dependencies: ["SwiftyChronoX"],
             path: "Tests/SwiftyChronoTests",
             resources: [],
             linkerSettings: [

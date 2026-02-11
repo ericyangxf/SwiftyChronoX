@@ -7,7 +7,7 @@
 
 import Foundation
 import Testing
-@testable import SwiftyChrono
+@testable import SwiftyChronoX
 
 struct JP_DateParsingTests {
 
